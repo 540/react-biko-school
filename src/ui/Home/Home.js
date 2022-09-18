@@ -1,12 +1,55 @@
 import './Home.css'
-import React from 'react'
+import React, { useEffect, useState } from 'react'
+import { api } from '../../api'
 
 export const Home = () => {
+  const [firstCharacterSelect, setFirstCharacterSelect] = useState()
+  const [secondCharacterSelect, setSecondCharacterSelect] = useState()
+  const [characters, setCharacters] = useState([])
+  const [comics, setComics] = useState([])
+
+  useEffect(() => {
+    const fetchCharacters = async () => {
+      const characters = await api.characters()
+      setCharacters(characters)
+    }
+
+    fetchCharacters()
+  }, [])
+
+  useEffect(() => {
+    if (!firstCharacterSelect || !secondCharacterSelect) return
+
+    const getCommonComics = async () => {
+      const firstCharacterComics = await api.comics(firstCharacterSelect)
+      const secondCharacterComics = await api.comics(secondCharacterSelect)
+
+      const commonComics = firstCharacterComics.filter(comic1 => secondCharacterComics.some(comic2 => comic1.id === comic2.id))
+
+      setComics(commonComics)
+    }
+
+    getCommonComics()
+  }, [firstCharacterSelect, secondCharacterSelect])
+
+  const clearSearch = () => {
+    setFirstCharacterSelect(undefined)
+    setSecondCharacterSelect(undefined)
+    setComics([])
+  }
+
   return (
     <main className="container">
       <Header />
-      <ComicList comics={[]} />
-      <Footer itemsCount={0} />
+      <ComicList characters={characters}
+                 firstCharacterSelect={firstCharacterSelect}
+                 secondCharacterSelect={secondCharacterSelect}
+                 onFirstCharacterSelect={setFirstCharacterSelect}
+                 onSecondCharacterSelect={setSecondCharacterSelect}
+                 comics={comics}
+                 onClear={clearSearch}
+      />
+      <Footer itemsCount={comics.length} />
     </main>
   )
 }
@@ -24,16 +67,26 @@ const Header = () => {
   )
 }
 
-const ComicList = ({ comics }) => {
+const ComicList = ({
+                     comics,
+                     characters,
+                     firstCharacterSelect,
+                     secondCharacterSelect,
+                     onFirstCharacterSelect,
+                     onSecondCharacterSelect,
+                     onClear
+                   }) => {
+  const selectOptions = characters.map(character => ({ value: character.id, label: character.name }))
+
   return (
     <section>
       <p className="inputLabel">
         Selecciona una pareja de personajes
       </p>
       <div className="inputContainer">
-        <Select options={[]} />
-        <Select options={[]} />
-        <button className="clearButton">Limpiar búsqueda</button>
+        <Select options={selectOptions} value={firstCharacterSelect} onChange={onFirstCharacterSelect} />
+        <Select options={selectOptions} value={secondCharacterSelect} onChange={onSecondCharacterSelect} />
+        <button className="clearButton" onClick={() => onClear()}>Limpiar búsqueda</button>
       </div>
       {comics.map(comic => (
         <div key={comic.id} className="comicCard">
@@ -55,9 +108,9 @@ const Footer = ({ itemsCount }) => {
   )
 }
 
-const Select = ({ options }) => {
+const Select = ({ options, value = '', onChange }) => {
   return (
-    <select className="characterSelector">
+    <select className="characterSelector" value={value} onChange={e => onChange(e.target.value)}>
       <option value="" />
       {
         options.map(option => {
