@@ -1,0 +1,66 @@
+:root {
+  --size-xs: 8px;
+  --size-s: 16px;
+  --size-m: 24px;
+  --size-l: 32px;
+  --size-xl: 64px;
+  --size-xxl: 86px;
+
+  --color-primary: dodgerblue;
+}
+
+.container {
+  padding: var(--size-l) var(--size-xxl);
+}
+
+.title {
+  font-size: var(--size-xl);
+  font-weight: 600;
+  margin-bottom: var(--size-s);
+}
+
+.subtitle {
+  font-size: var(--size-l);
+  margin-bottom: var(--size-l);
+}
+
+.inputLabel {
+  font-size: var(--size-m);
+  margin-bottom: var(--size-xs);
+}
+
+.inputContainer {
+  display: flex;
+  gap: var(--size-s);
+  margin-bottom: var(--size-l);
+}
+
+.filterInput {
+  font-size: var(--size-m);
+  padding: var(--size-xs);
+  border-radius: var(--size-xs);
+}
+
+.clearButton {
+  font-size: var(--size-s);
+  border-radius: var(--size-xs);
+  border: none;
+  color: white;
+  background-color: var(--color-primary);
+  padding: 0 var(--size-s);
+}
+
+.comicCard {
+  display: flex;
+  flex-direction: column;
+  gap: var(--size-s);
+  margin-bottom: var(--size-l);
+  border: 2px solid var(--color-primary);
+  border-radius: var(--size-xs);
+  padding: var(--size-s);
+}
+
+.comicTitle {
+  font-size: var(--size-m);
+  font-weight: bold;
+}

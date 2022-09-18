@@ -1,0 +1,19 @@
+*,
+*::before,
+*::after {
+  box-sizing: border-box; /* 1 */
+}
+
+html {
+  -ms-overflow-style: scrollbar; /* 5 */
+  -webkit-tap-highlight-color: rgba(0, 0, 0, 0); /* 6 */
+  -ms-text-size-adjust: 100%; /* 4 */
+  -webkit-text-size-adjust: 100%; /* 4 */
+}
+
+body {
+  background-color: white; /* 2 */
+  color: #2E404D;
+  text-align: left; /* 3 */
+  font-family: sans-serif;
+}
