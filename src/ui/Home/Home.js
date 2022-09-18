@@ -1,31 +1,19 @@
-import React, { useState } from 'react'
 import './Home.css'
-
-const comics = [
-  {
-    id: 45977,
-    title: 'Captain America (2012) #11',
-    characters: ['Captain America']
-  },
-  {
-    id: 43722,
-    title: 'Captain America (2012) #1',
-    characters: ['Captain America']
-  },
-  {
-    id: 40391,
-    title: 'Captain America (2011) #18',
-    characters: ['Captain America']
-  },
-  {
-    id: 43339,
-    title: 'Uncanny Avengers (2012) #1',
-    characters: ['Captain America', 'Havok', 'Rogue', 'Scarlet Witch', 'Thor', 'Wolverine']
-  }
-]
+import React, { useEffect, useState } from 'react'
+import { api } from '../../api'
 
 export const Home = () => {
   const [filter, setFilter] = useState('')
+  const [comics, setComics] = useState([])
+
+  useEffect(() => {
+    const fetchAllComics = async () => {
+      const allComics = await api.allComics()
+      setComics(allComics)
+    }
+
+    fetchAllComics()
+  }, [])
 
   const filteredComics = comics.filter(comic => comic.title.toLowerCase().includes(filter.toLowerCase()))
 
