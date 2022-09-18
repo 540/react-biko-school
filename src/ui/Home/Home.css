@@ -26,7 +26,7 @@
 
 .inputLabel {
   font-size: var(--size-m);
-  margin-bottom: var(--size-xs);
+  margin-bottom: var(--size-s);
 }
 
 .inputContainer {
@@ -35,9 +35,10 @@
   margin-bottom: var(--size-l);
 }
 
-.filterInput {
-  font-size: var(--size-m);
+.characterSelector {
+  font-size: var(--size-l);
   padding: var(--size-xs);
+  min-width: 200px;
   border-radius: var(--size-xs);
 }
 

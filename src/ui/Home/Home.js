@@ -1,32 +1,17 @@
 import './Home.css'
-import React, { useEffect, useState } from 'react'
-import { api } from '../../api'
+import React from 'react'
 
 export const Home = () => {
-  const [filter, setFilter] = useState('')
-  const [comics, setComics] = useState([])
-
-  useEffect(() => {
-    const fetchAllComics = async () => {
-      const allComics = await api.allComics()
-      setComics(allComics)
-    }
-
-    fetchAllComics()
-  }, [])
-
-  const filteredComics = comics.filter(comic => comic.title.toLowerCase().includes(filter.toLowerCase()))
-
   return (
     <main className="container">
       <Header />
-      <ComicList comics={filteredComics} filter={filter} onFilter={setFilter} />
-      <Footer itemsCount={filteredComics.length} />
+      <ComicList comics={[]} />
+      <Footer itemsCount={0} />
     </main>
   )
 }
 
-export const Header = () => {
+const Header = () => {
   return (
     <header>
       <h1 className="title">
@@ -39,15 +24,16 @@ export const Header = () => {
   )
 }
 
-export const ComicList = ({ filter, onFilter, comics }) => {
+const ComicList = ({ comics }) => {
   return (
     <section>
       <p className="inputLabel">
-        Escribe un personaje en la lista
+        Selecciona una pareja de personajes
       </p>
       <div className="inputContainer">
-        <input className="filterInput" onInput={e => onFilter(e.target.value)} value={filter} />
-        <button className="clearButton" onClick={() => onFilter('')}>Limpiar búsqueda</button>
+        <Select options={[]} />
+        <Select options={[]} />
+        <button className="clearButton">Limpiar búsqueda</button>
       </div>
       {comics.map(comic => (
         <div key={comic.id} className="comicCard">
@@ -61,13 +47,28 @@ export const ComicList = ({ filter, onFilter, comics }) => {
   )
 }
 
-export const Footer = ({ itemsCount }) => {
+const Footer = ({ itemsCount }) => {
   return (
     <footer>
       <p>Elementos en la lista: {itemsCount}</p>
     </footer>
   )
 }
+
+const Select = ({ options }) => {
+  return (
+    <select className="characterSelector">
+      <option value="" />
+      {
+        options.map(option => {
+          return <option key={option.value} value={option.value}>{option.label}</option>
+        })
+      }
+    </select>
+  )
+}
+
+
 
 
 
