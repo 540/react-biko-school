@@ -12,6 +12,7 @@ html {
 }
 
 body {
+  height: 100%;
   background-color: white; /* 2 */
   color: #2E404D;
   text-align: left; /* 3 */

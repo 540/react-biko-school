@@ -1,12 +1,15 @@
 import './Home.css'
-import React, { useEffect, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import { api } from '../../api'
+import { ThemeContext } from '../_context/ThemeContext'
 
 export const Home = () => {
   const [firstCharacterSelect, setFirstCharacterSelect] = useState()
   const [secondCharacterSelect, setSecondCharacterSelect] = useState()
   const [characters, setCharacters] = useState([])
   const [comics, setComics] = useState([])
+
+  const { theme } = useContext(ThemeContext)
 
   useEffect(() => {
     const fetchCharacters = async () => {
@@ -39,7 +42,9 @@ export const Home = () => {
   }
 
   return (
-    <main className="container">
+    <main className="container" style={{
+      backgroundColor: theme === 'dark' ? 'black' : 'white'
+    }}>
       <Header />
       <ComicList characters={characters}
                  firstCharacterSelect={firstCharacterSelect}
@@ -55,16 +60,24 @@ export const Home = () => {
 }
 
 const Header = () => {
+  const { theme, toggleTheme } = useContext(ThemeContext)
+
   return (
     <header>
       <div className="checkboxContainer">
-        <span className="checkboxLabel">El tema actual es: claro</span>
-        <input className="checkbox" type="checkbox" />
+        <span className="checkboxLabel" style={{
+          color: theme === 'dark' ? 'white' : 'black'
+        }}>El tema actual es: {theme === 'light' ? 'claro' : 'oscuro'}</span>
+        <input className="checkbox" type="checkbox" onChange={() => toggleTheme()} />
       </div>
-      <h1 className="title">
+      <h1 className="title" style={{
+        color: theme === 'dark' ? 'white' : 'black'
+      }}>
         Buscador de cómics de Marvel
       </h1>
-      <h2 className="subtitle">
+      <h2 className="subtitle" style={{
+        color: theme === 'dark' ? 'white' : 'black'
+      }}>
         Este buscador encontrará los cómics en los que aparezcan los dos personajes que selecciones en el formulario
       </h2>
     </header>
@@ -81,10 +94,13 @@ const ComicList = ({
                      onClear
                    }) => {
   const selectOptions = characters.map(character => ({ value: character.id, label: character.name }))
+  const { theme } = useContext(ThemeContext)
 
   return (
     <section>
-      <p className="inputLabel">
+      <p className="inputLabel" style={{
+        color: theme === 'dark' ? 'white' : 'black'
+      }}>
         Selecciona una pareja de personajes
       </p>
       <div className="inputContainer">
@@ -94,10 +110,14 @@ const ComicList = ({
       </div>
       {comics.map(comic => (
         <div key={comic.id} className="comicCard">
-          <p className="comicTitle">
+          <p className="comicTitle" style={{
+            color: theme === 'dark' ? 'white' : 'black'
+          }}>
             {comic.title}
           </p>
-          <p>{comic.characters.join(', ')}</p>
+          <p style={{
+            color: theme === 'dark' ? 'white' : 'black'
+          }}>{comic.characters.join(', ')}</p>
         </div>
       ))}
     </section>
@@ -105,9 +125,13 @@ const ComicList = ({
 }
 
 const Footer = ({ itemsCount }) => {
+  const { theme } = useContext(ThemeContext)
+
   return (
     <footer>
-      <p>Elementos en la lista: {itemsCount}</p>
+      <p style={{
+        color: theme === 'dark' ? 'white' : 'black'
+      }}>Elementos en la lista: {itemsCount}</p>
     </footer>
   )
 }

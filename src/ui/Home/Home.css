@@ -11,7 +11,10 @@
 
 .container {
   padding: var(--size-l) var(--size-xxl);
-  height: 100vh;
+}
+
+.darkContainer {
+  background-color: #2E404D;
 }
 
 .title {
