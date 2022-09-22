@@ -11,6 +11,7 @@
 
 .container {
   padding: var(--size-l) var(--size-xxl);
+  height: 100vh;
 }
 
 .title {
@@ -64,4 +65,20 @@
 .comicTitle {
   font-size: var(--size-m);
   font-weight: bold;
+}
+
+.checkboxContainer {
+  display: flex;
+  align-items: center;
+  gap: var(--size-xs);
+  margin-bottom: var(--size-m);
+}
+
+.checkboxLabel {
+  font-size: var(--size-m);
+}
+
+.checkbox {
+  width: 20px;
+  height: 20px;
 }

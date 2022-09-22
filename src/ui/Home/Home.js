@@ -57,6 +57,10 @@ export const Home = () => {
 const Header = () => {
   return (
     <header>
+      <div className="checkboxContainer">
+        <span className="checkboxLabel">El tema actual es: claro</span>
+        <input className="checkbox" type="checkbox" />
+      </div>
       <h1 className="title">
         Buscador de cómics de Marvel
       </h1>
